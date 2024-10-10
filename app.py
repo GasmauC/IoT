@@ -25,17 +25,22 @@ def insert_data():
         battery_level = data.get("battery_level")
         temperature = data.get("temperature")
         humidity = data.get("humidity")
+        regar = data.get("regar")
+        plagas = data.get("plagas")
+        
+
+        
         
 
 
         if sensor is None or value is None:
-            return jsonify({"status": "error", "message": "Both 'sensor' and 'value' are required and 'message' are required and 'nivelUmbral' are required and 'location' are required and 'device_status' are required and 'battery_level are required and 'temperature' are required and 'humidity' are required "}), 400
+            return jsonify({"status": "error", "message": "Both 'sensor' and 'value' are required and 'message' are required and 'nivelUmbral' are required and 'location' are required and 'device_status' are required and 'battery_level are required and 'temperature' are required and 'humidity' are required and 'regar' are required and 'plagas' are required "}), 400
 
         try:
             conn = mysql.connector.connect(**db_config)
             cursor = conn.cursor()
 
-            cursor.execute("INSERT INTO sensor_data (sensor, value, message,nivelUmbral,location,device_status,battery_level,temperature,humidity) VALUES (%s, %s, %s,%s,%s, %s, %s,%s,%s)", (sensor, value, message,nivelUmbral,location,device_status,battery_level,temperature,humidity))
+            cursor.execute("INSERT INTO sensor_data (sensor, value, message,nivelUmbral,location,device_status,battery_level,temperature,humidity, regar,plagas) VALUES (%s, %s, %s,%s,%s, %s, %s,%s,%s,%s,%s)", (sensor, value, message,nivelUmbral,location,device_status,battery_level,temperature,humidity,regar,plagas))
             conn.commit()
 
             cursor.close()
@@ -57,7 +62,7 @@ def get_data():
         cursor = conn.cursor()
 
         # Ejecutar consulta para obtener todos los datos
-        cursor.execute("SELECT id, sensor, value, message,nivelUmbral, timestamp,location,device_status,battery_level,temperature,humidity FROM sensor_data")
+        cursor.execute("SELECT id, sensor, value, message,nivelUmbral, timestamp,location,device_status,battery_level,temperature,humidity,regar,plagas FROM sensor_data")
         rows = cursor.fetchall()
 
         # Cerrar el cursor y la conexión
@@ -78,7 +83,9 @@ def get_data():
                 "device_status": row[7],
                 "battery_level": row[8],
                 "temperature": row[9],
-                "humidity": row[10]
+                "humidity": row[10],
+                "regar": row[11],
+                "plagas": row[12]
             })
 
         return jsonify({"status": "success", "data": results}), 200
