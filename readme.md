@@ -5,7 +5,8 @@
 - *Eric Heredia* 🇦🇷 - 🐣 [Mi Github](https://github.com/Eric-Heredia)
 - *Sofia Auzqui* 🇦🇷 - 🐣 [Mi Github](https://github.com/Sofyauzqui)
 
-<figure><img src="./ispc.jpeg" alt="logo" style="height: 400px;"></figure>
+<figure><img src="./ispc.jpeg" alt="logo" style="height: 200px;"></figure>
+
 
 ## Proyecto IoT de Monitorización Ambiental y Detección de Plagas
 Este proyecto de Internet de las Cosas (IoT) se enfoca en la monitorización ambiental y la detección de plagas mediante el uso de sensores, un simulador en Wokwi, una base de datos MySQL en Clever Cloud, y una API alojada en Render. El objetivo es crear un sistema que recoja datos en tiempo real y los guarde para análisis posterior.
