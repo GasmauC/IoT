@@ -20,15 +20,22 @@ def insert_data():
         value = data.get("value")
         message = data.get("message")
         nivelUmbral = data.get("nivelUmbral")
+        location = data.get("location")
+        device_status = data.get("device_status")
+        battery_level = data.get("battery_level")
+        temperature = data.get("temperature")
+        humidity = data.get("humidity")
+        
+
 
         if sensor is None or value is None:
-            return jsonify({"status": "error", "message": "Both 'sensor' and 'value' are required and 'message' are required and 'nivelUmbral' are required"}), 400
+            return jsonify({"status": "error", "message": "Both 'sensor' and 'value' are required and 'message' are required and 'nivelUmbral' are required and 'location' are required and 'device_status' are required and 'battery_level are required and 'temperature' are required and 'humidity' are required "}), 400
 
         try:
             conn = mysql.connector.connect(**db_config)
             cursor = conn.cursor()
 
-            cursor.execute("INSERT INTO sensor_data (sensor, value, message,nivelUmbral) VALUES (%s, %s, %s,%s)", (sensor, value, message,nivelUmbral))
+            cursor.execute("INSERT INTO sensor_data (sensor, value, message,nivelUmbral,location,device_status,battery_level,temperature,humidity) VALUES (%s, %s, %s,%s,%s, %s, %s,%s,%s)", (sensor, value, message,nivelUmbral,location,device_status,battery_level,temperature,humidity))
             conn.commit()
 
             cursor.close()
@@ -50,7 +57,7 @@ def get_data():
         cursor = conn.cursor()
 
         # Ejecutar consulta para obtener todos los datos
-        cursor.execute("SELECT id, sensor, value, message,nivelUmbral, timestamp FROM sensor_data")
+        cursor.execute("SELECT id, sensor, value, message,nivelUmbral, timestamp,location,device_status,battery_level,temperature,humidity FROM sensor_data")
         rows = cursor.fetchall()
 
         # Cerrar el cursor y la conexión
@@ -66,7 +73,12 @@ def get_data():
                 "value": row[2],
                 "message":row[3],
                 "nivelUmbral": row[4],
-                "timestamp": row[5].strftime("%Y-%m-%d %H:%M:%S")  # Formato de fecha
+                "timestamp": row[5].strftime("%Y-%m-%d %H:%M:%S"),  # Formato de fecha
+                "location": row[6],
+                "device_status": row[7],
+                "battery_level": row[8],
+                "temperature": row[9],
+                "humidity": row[10]
             })
 
         return jsonify({"status": "success", "data": results}), 200
